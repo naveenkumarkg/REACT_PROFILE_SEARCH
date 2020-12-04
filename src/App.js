@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "./App.css";
+import { CardList } from "./components/card-list/card-list.component";
+import { Searchfield } from "./components/search/search_field.component";
+
+export class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      string: "Github Profile Search",
+      users: [],
+      searchField: "",
+    };
+  }
+
+  componentDidMount() {
+    fetch("https://api.github.com/users")
+      .then((data) => data.json())
+      .then((users) => this.setState({ users: users }));
+  }
+  render() {
+    const { users, searchField } = this.state;
+    const filterValue = users.filter((user) =>
+      user.login.toLowerCase().includes(searchField)
+    );
+    return (
+      <div className="App">
+        <h1 className="margin_botton">{this.state.string}</h1>
+        <Searchfield
+          handleChange={(e) => {
+            this.setState({ searchField: e.target.value });
+          }}
+          placeholder="Search Field"
+        />
+        <CardList filterValue={filterValue} />
+      </div>
+    );
+  }
 }
 
 export default App;
