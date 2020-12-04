@@ -5,10 +5,10 @@ export const CardList = (props) => {
   return (
     <div className="card-list">
       {props.filterValue.map((user) => (
-        <div>
-          <img class="img-size" src={user.avatar_url} />
+        <div key={user.id}>
+          <img className="img-size" alt="" src={user.avatar_url} />
           <p key={user.id}>{user.login}</p>
-          <a target="_blank" href={user.html_url}>
+          <a target="_blank" rel="noopener noreferrer" href={user.html_url}>
             Visit Profile
           </a>
         </div>

@@ -21,6 +21,7 @@ export class App extends Component {
   }
   render() {
     const { users, searchField } = this.state;
+    console.log(searchField)
     const filterValue = users.filter((user) =>
       user.login.toLowerCase().includes(searchField)
     );
